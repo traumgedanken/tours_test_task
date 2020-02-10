@@ -7,6 +7,7 @@ BaseClass = declarative_base()
 
 class Tour(BaseClass):
     """Tour class to work with DB using ORM"""
+
     __tablename__ = 'tour'
 
     tour_id = Column(Integer, primary_key=True)

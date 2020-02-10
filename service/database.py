@@ -2,9 +2,8 @@
 import os
 
 import dotenv
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, exc
 from sqlalchemy.orm import sessionmaker
-
 from models import BaseClass, Tour
 
 
@@ -23,8 +22,10 @@ dotenv.load_dotenv()
 
 class Database:
     """Class to connect to database"""
-    def __init__(self):
-        db_url = os.getenv('DB_URL') or 'sqlite:///'
+
+    def __init__(self, db_url=None):
+        if not db_url:
+            db_url = os.getenv('DB_URL') or 'sqlite:///'
         self.engine = create_engine(db_url)
         BaseClass.metadata.create_all(self.engine)
         self.session_maker = sessionmaker(self.engine)
