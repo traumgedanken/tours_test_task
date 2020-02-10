@@ -1,0 +1,36 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file with description of endpoints for Tours API
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+# Paths supported by the server application
+paths:
+  /tours:
+    get:
+      operationId: "service.db_instance.get_all"
+      summary: "The tours data structure supported by the server application"
+      description: "Read the list of tours"
+      responses:
+        200:
+          description: "Successful read tours list operation"
+          schema:
+            type: "array"
+            items:
+              properties:
+                tour_id:
+                  type: "integer"
+                origin_country:
+                  type: "string"
+                destination_country:
+                  type: "string"
+                duration_days:
+                  type: "string"
+                start_date:
+                  type: "string"
