@@ -4,33 +4,164 @@ info:
   version: "1.0.0"
   title: Swagger REST Article
 consumes:
-  - "application/json"
+  - application/json
 produces:
-  - "application/json"
+  - application/json
 
-basePath: "/api"
+basePath: /api
 
 # Paths supported by the server application
 paths:
-  /tours:
+  /tour:
     get:
-      operationId: "service.db_instance.get_all"
-      summary: "The tours data structure supported by the server application"
-      description: "Read the list of tours"
+      operationId: rest.crud.get_all
+      tags:
+        - Tour
+      summary: The tours data structure supported by the server application
+      description: Read the list of tours
       responses:
         200:
-          description: "Successful read tours list operation"
+          description: Successful read tours list operation
           schema:
-            type: "array"
+            type: array
             items:
               properties:
                 tour_id:
-                  type: "integer"
+                  type: integer
+                  description: Unique tour's ID
                 origin_country:
-                  type: "string"
+                  type: string
+                  description: Country where tour starts
                 destination_country:
-                  type: "string"
+                  type: string
+                  description: Destination country of tour
                 duration_days:
-                  type: "string"
+                  type: integer
+                  description: Duration of tour in days
                 start_date:
-                  type: "string"
+                  type: string
+                  description: Date of the first tour's day
+
+    post:
+      operationId: rest.crud.create
+      tags:
+        - Tour
+      summary: Create a tour and add it to the tours list
+      description: Create a new tour in the tours list
+      parameters:
+        - name: tour
+          in: body
+          description: Tour to create
+          required: True
+          schema:
+            type: object
+            properties:
+              origin_country:
+                type: string
+                description: Country where tour starts
+              destination_country:
+                type: string
+                description: Destination country of tour
+              duration_days:
+                type: integer
+                description: Duration of tour in days
+              start_date:
+                type: string
+                description: Date of the first tour's day
+      responses:
+        201:
+          description: Successfully created person in list
+        400:
+          description: Invalid patameters given
+
+  /tour/{tour_id}:
+    get:
+      operationId: rest.crud.get_one
+      tags:
+        - Tour
+      summary: Read one tour from the tours list
+      description: Read one tour from the tours list
+      parameters:
+        - name: tour_id
+          in: path
+          description: Unique tour's ID
+          type: integer
+          required: True
+      responses:
+        404:
+          description: No tour found by given tour_id
+        200:
+          description: Successfully read person from people list operation
+          schema:
+            properties:
+              tour_id:
+                type: integer
+                description: Unique tour's ID
+              origin_country:
+                type: string
+                description: Country where tour starts
+              destination_country:
+                type: string
+                description: Destination country of tour
+              duration_days:
+                type: integer
+                description: Duration of tour in days
+              start_date:
+                type: string
+                description: Date of the first tour's day
+
+    put:
+      operationId: rest.crud.update
+      tags:
+        - Tour
+      summary: Update a tour in the tours list
+      description: Update a tour in the tours list
+      parameters:
+        - name: tour_id
+          in: path
+          description: Last name of the person to update in the list
+          type: string
+          required: True
+        - name: tour_upd
+          in: body
+          description: Tour to create
+          required: True
+          schema:
+            type: object
+            properties:
+              origin_country:
+                type: string
+                description: Country where tour starts
+              destination_country:
+                type: string
+                description: Destination country of tour
+              duration_days:
+                type: integer
+                description: Duration of tour in days
+              start_date:
+                type: string
+                description: Date of the first tour's day
+      responses:
+        200:
+          description: Successfully updated person in people list
+        400:
+          description: Invalid patameters given
+        404:
+          description: No tour found by given tour_id
+
+    delete:
+      operationId: rest.crud.delete
+      tags:
+        - Tour
+      summary: Delete a tour from the tours list
+      description: Delete a tour
+      parameters:
+        - name: tour_id
+          in: path
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Successfully deleted a person from people list
+        404:
+          description: No tour found by given tour_id

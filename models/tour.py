@@ -15,7 +15,14 @@ class Tour(BaseClass):
     duration_days = Column(Integer, nullable=False)
     start_date = Column(Date, nullable=False)
 
+    def __init__(self, origin_country, destination_country, duration_days, start_date):
+        self.origin_country = origin_country
+        self.destination_country = destination_country
+        self.duration_days = duration_days
+        self.start_date = start_date
+
     def values_dict(self):
+        """This function return JSON serializable copy of tour object"""
         return {
             'tour_id': self.tour_id,
             'origin_country': self.origin_country,
